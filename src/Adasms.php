@@ -4,8 +4,8 @@ namespace NotificationChannels\Adasms;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\RequestOptions;
-use NotificationChannels\Adasms\Exceptions\CouldNotSendNotification;
 use Illuminate\Support\Arr;
+use NotificationChannels\Adasms\Exceptions\CouldNotSendNotification;
 
 class Adasms
 {
@@ -101,22 +101,23 @@ class Adasms
         $msg = $message['message'];
         $callbackUrl = $message['callback_url'] ?? null;
 
-        $apiUrl = sprintf("%s/send", $this->apiBaseUri);
+        $apiUrl = sprintf('%s/send', $this->apiBaseUri);
 
         try {
             $response = $this->http->post($apiUrl, [
                 RequestOptions::JSON => [
-                    '_token' => $this->token,
-                    'phone' => $phone,
-                    'message' => $msg,
-                    'callback_url' => $callbackUrl // todo implement delivery report with $msgId
-                ]
+                    '_token'       => $this->token,
+                    'phone'        => $phone,
+                    'message'      => $msg,
+                    'callback_url' => $callbackUrl, // todo implement delivery report with $msgId
+                ],
             ]);
 
             $payload = json_decode($response->getBody()->getContents(), true);
 
             if ($error = Arr::get($payload, 'error')) {
                 $explain = Arr::get($payload, 'explain');
+
                 throw CouldNotSendNotification::adasmsRespondedWithAnError("'$error': $explain");
             }
 

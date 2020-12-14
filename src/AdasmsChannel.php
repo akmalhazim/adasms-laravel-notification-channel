@@ -3,7 +3,6 @@
 namespace NotificationChannels\Adasms;
 
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Arr;
 use NotificationChannels\Adasms\Exceptions\CouldNotSendNotification;
 
 /**
@@ -33,6 +32,7 @@ class AdasmsChannel
      * @param Notification $notification
      *
      * @throws CouldNotSendNotification
+     *
      * @return null|array
      */
     public function send($notifiable, Notification $notification): ?array
@@ -48,7 +48,7 @@ class AdasmsChannel
 
         $params = [
             'phone_numbers' => [$to],
-            'message' => trim($message->content)
+            'message'       => trim($message->content),
         ];
 
         if ($message->statusCallback) {

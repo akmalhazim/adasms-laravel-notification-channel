@@ -22,10 +22,12 @@ class AdasmsMessage
     {
         $this->content = $content;
     }
+
     /**
      * Set the message content.
      *
-     * @param  string  $content
+     * @param string $content
+     *
      * @return $this
      */
     public function content(string $content)
@@ -38,7 +40,8 @@ class AdasmsMessage
     /**
      * Set the webhook callback URL to update the message status.
      *
-     * @param  string  $callback
+     * @param string $callback
+     *
      * @return $this
      */
     public function statusCallback(string $callback)

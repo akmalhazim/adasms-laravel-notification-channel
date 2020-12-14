@@ -22,6 +22,7 @@ class CouldNotSendNotification extends Exception
         if (!$phone) {
             return new static('Phone number provided is not a valid phone number');
         }
+
         return new static("$phone is not a valid phone number");
     }
 
@@ -35,7 +36,7 @@ class CouldNotSendNotification extends Exception
     public static function adasmsRespondedWithAnError($exception): self
     {
         if ($exception instanceof ClientException) {
-            if (! $exception->hasResponse()) {
+            if (!$exception->hasResponse()) {
                 return new static('Adasms responded with an error but no response body found');
             }
 
@@ -49,6 +50,7 @@ class CouldNotSendNotification extends Exception
         if (is_string($exception)) {
             return new static("AdaSMS server error `$exception`");
         }
+
         return new static('AdaSMS unknown server error');
     }
 
@@ -65,12 +67,12 @@ class CouldNotSendNotification extends Exception
     }
 
     /**
-    * Thrown when we're unable to communicate with Adasms.
-    *
-    * @param $message
-    *
-    * @return static
-    */
+     * Thrown when we're unable to communicate with Adasms.
+     *
+     * @param $message
+     *
+     * @return static
+     */
     public static function couldNotCommunicateWithAdasms($message): self
     {
         return new static("The communication with AdaSMS failed. `{$message}`");
